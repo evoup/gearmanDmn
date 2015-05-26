@@ -17,3 +17,4 @@ define(__CONF_SUBPATH,       'conf'); // 配置文件的子路径
 define(__CNAME,              'c'); // 控制器的名字 
 define(__CONF_NAME,          'gmDaemon'); // 配置文件的名字 
 define(__CONF_FILE,          __ADDON_ROOT.'/'.__CONF_SUBPATH.'/conf.ini'); // 配置文件  
+define(__VERSION,            '');

@@ -32,53 +32,15 @@ function microtime_float() {
  * @param $syslog_tag
  * @return 
  */
-function SaveSysLog($data, $debug_lev=4, $syslog_facility='LOG_LOCAL1', $syslog_level='LOG_ALERT', $syslog_tag='monitor') {
+function SaveSysLog($data, $debug_lev=4, $syslog_facility='LOG_LOCAL1', $syslog_level='LOG_ALERT', $syslog_tag=__PRGM_NAME) {
     $debug_level=$GLOBALS['debug_level']; // 调试等级
-    $controller_type=$GLOBALS['controller_type']; // 控制器类型 
-    $save_upload_log=$GLOBALS['save_upload_log']; // 是否保存上传日志 
-    $save_update_log=$GLOBALS['save_update_log']; // 是否保存更新日志 
-    $upload_log_facility=$GLOBALS['upload_log_facility'];
-    $upload_log_level=$GLOBALS['upload_log_level'];
-    $scan_log_facility=$GLOBALS['scan_log_facility'];
-    $scan_log_level=$GLOBALS['scan_log_level'];
-    $update_log_facility=$GLOBALS['update_log_facility'];
-    $update_log_level=$GLOBALS['update_log_level'];
+    $log_facility=$GLOBALS['log_facility'];
+    $log_level=$GLOBALS['log_level'];
     $stag=$GLOBALS['stag'];
-    switch ($controller_type) {
-    case('upload'):
-        if (!$save_upload_log) { // 是否保存客户机上传监控信息日志
-            return; 
-        } else {
-            // 如果配置了syslog level使用配置的，否则使用默认的
-            $syslog_level = !empty($upload_log_level)?$upload_log_level:$syslog_level;
-            // 如果配置了syslog facility使用配置的，否则使用默认的
-            $syslog_facility = !empty($upload_log_facility)?$upload_log_facility:$syslog_facility;
-        }
-        break;
-    case('testspeed_update'):
-        if (!$save_update_log) {
-            return;
-        } else {
-            // 如果配置了syslog level使用配置的，否则使用默认的
-            $syslog_level = !empty($update_log_level)?$update_log_level:$syslog_level;
-            // 如果配置了syslog facility使用配置的，否则使用默认的
-            $syslog_facility = !empty($update_log_facility)?$update_log_facility:$syslog_facility;
-        }
-    case('update'):
-        if (!$save_update_log) { // 是否保存客户机访问更新的日志
-            return; 
-        } else {
-            // 如果配置了syslog level使用配置的，否则使用默认的
-            $syslog_level = !empty($update_log_level)?$update_log_level:$syslog_level;
-            // 如果配置了syslog facility使用配置的，否则使用默认的
-            $syslog_facility = !empty($update_log_facility)?$update_log_facility:$syslog_facility;
-        }
-        break;
-    default:
-        $syslog_level = !empty($scan_log_level)?$scan_log_level:"LOG_DEBUG";
-        $syslog_facility =!empty($scan_log_facility)?$scan_log_facility:$syslog_facility;
-        break;
-    }
+    // 如果配置了syslog level使用配置的，否则使用默认的
+    $syslog_level = !empty($log_level)?$log_level:$syslog_level;
+    // 如果配置了syslog facility使用配置的，否则使用默认的
+    $syslog_facility = !empty($log_facility)?$log_facility:$syslog_facility;
 
     if ($debug_lev<=$debug_level) {
         @define_syslog_variables();
@@ -137,3 +99,11 @@ function array_diff_key_recursive ($a1, $a2) {
     return $r;
 }
 
+/**
+ *@brief 处理退出需要做的工作
+ */
+function doExit($why="") {
+    global $module_name;
+    !empty($why) && SaveSysLog("[$module_name][fun.doExit][because:$why]",3);
+    exit();
+}

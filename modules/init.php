@@ -13,14 +13,14 @@
   +----------------------------------------------------------------------+
 */
 $module_name="init";
-makeDir(__CONF_FILE,"0755",0,'f'); // 创建配置文件目录 
+makeDir(__CONF_FILE,"0755",0,'f'); // 创建配置文件目录
 $conf_sample = <<<EOT
 [general]
 debug_level=5
-log_facility="LOG_LOCAL3"          ;syslog syslog_facility 
+log_facility="LOG_LOCAL3"          ;syslog syslog_facility
 log_level="LOG_ALERT"              ;syslog syslog_level
 EOT;
-if (true === buildConf(__CONF_FILE,$conf_sample)) { // 创建默认SAMPLE配置文件 
+if (true === buildConf(__CONF_FILE,$conf_sample)) { // 创建默认SAMPLE配置文件
     echo "build configuration file,done. run again\n";
     doExit("build conf");
 }

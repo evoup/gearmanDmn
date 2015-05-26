@@ -34,6 +34,7 @@ function makeDir($path,$mode="0755",$depth=0,$type='d') {
         }
         exec("/bin/mkdir -p -m $mode $path");
     } elseif (is_dir($path)) {
+echo $path;
         return true;
     } else {
         return false;
