@@ -18,3 +18,5 @@ define(__CNAME,              'c'); // 控制器的名字
 define(__CONF_NAME,          'gmDaemon'); // 配置文件的名字 
 define(__CONF_FILE,          __ADDON_ROOT.'/'.__CONF_SUBPATH.'/conf.ini'); // 配置文件  
 define(__VERSION,            '');
+define(__RUN_SUBPATH,        'inc');
+define(__PROCESS_NAME,       'gmDmn');

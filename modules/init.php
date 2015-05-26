@@ -84,4 +84,11 @@ $GLOBALS['_daemon']['signalsName'] = array(
     SIGUSR2   => 'SIGUSR2',
 );
 /* }}} */
+
+$pid_file = __PRGM_PATH . '/' . __RUN_SUBPATH . '/' . __PROCESS_NAME.'.pid';
+echo $pid_file;
+
+if (!file_exists($pid_file)) {
+    makeDir($pid_file,"0755",0,'f');
+}
 ?>
